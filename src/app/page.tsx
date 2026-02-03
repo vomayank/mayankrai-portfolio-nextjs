@@ -9,6 +9,8 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 import TiltCard from "@/components/TiltCard";
 import ChatBot from "@/components/ChatBot";
 import SnakeGame from "@/components/SnakeGame";
+import FloatingSkills from "@/components/FloatingSkills";
+import useSoundEffects from "@/hooks/useSoundEffects";
 import { FaLinkedin, FaGithub, FaYoutube, FaEnvelope } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -87,6 +89,7 @@ const socials = [
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
+  const { playHoverSound, playClickSound } = useSoundEffects();
 
   // Scroll to top on page load
   useEffect(() => {
@@ -180,6 +183,8 @@ export default function Home() {
             <div className="flex gap-4">
               <motion.a
                 href="#contact"
+                onClick={playClickSound}
+                onHoverStart={playHoverSound}
                 whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(0,240,255,0.4)" }}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold shadow-lg shadow-cyan-500/25"
@@ -188,6 +193,8 @@ export default function Home() {
               </motion.a>
               <motion.a
                 href="#experience"
+                onClick={playClickSound}
+                onHoverStart={playHoverSound}
                 whileHover={{ scale: 1.05, borderColor: "#00f0ff" }}
                 className="px-8 py-3 rounded-lg border border-gray-700 text-gray-300 font-semibold transition-colors"
               >
@@ -202,6 +209,9 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative flex items-center justify-center"
           >
+            {/* Floating Skills */}
+            <FloatingSkills />
+
             {/* Rotating Rings */}
             {[420, 460, 500].map((size, i) => (
               <motion.div
@@ -220,6 +230,7 @@ export default function Home() {
             {/* Profile Image */}
             <motion.div
               whileHover={{ scale: 1.05 }}
+              onHoverStart={playHoverSound}
               className="relative w-80 h-80 rounded-full overflow-hidden glow-border"
             >
               <Image
