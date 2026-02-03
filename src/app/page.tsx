@@ -7,6 +7,8 @@ import NeuralBackground from "@/components/NeuralBackground";
 import TypeWriter from "@/components/TypeWriter";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import TiltCard from "@/components/TiltCard";
+import ChatBot from "@/components/ChatBot";
+import SnakeGame from "@/components/SnakeGame";
 import { FaLinkedin, FaGithub, FaYoutube, FaEnvelope } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -123,7 +125,7 @@ export default function Home() {
           ◈ mayank.dev
         </motion.div>
         <div className="hidden md:flex gap-8">
-          {["About", "Experience", "Skills", "Contact"].map((item) => (
+          {["About", "Experience", "Skills", "Play", "Contact"].map((item) => (
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -351,8 +353,43 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Interactive Section */}
+      <section id="play" className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-4">Interactive Zone</h2>
+            <p className="text-gray-400">Chat with my AI assistant or take a break with a game!</p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-xl font-semibold mb-4 text-center text-cyan-400">💬 Ask Me Anything</h3>
+              <ChatBot />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-xl font-semibold mb-4 text-center text-purple-400">🎮 Take a Break</h3>
+              <SnakeGame />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-6">
+      <section id="contact" className="py-24 px-6 bg-[#050508]">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
