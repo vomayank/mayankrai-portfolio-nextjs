@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --neon-cyan: #00f0ff;
+  --neon-purple: #b026ff;
+  --neon-green: #0aff0a;
+  --dark-bg: #0a0a0f;
+  --darker-bg: #050508;
+  --card-bg: rgba(255, 255, 255, 0.03);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon-cyan) var(--dark-bg);
+}
+
+body {
+  font-family: var(--font-space-grotesk), sans-serif;
+  background: var(--dark-bg);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--neon-cyan);
+  color: #000;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-cyan));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Glowing border effect */
+.glow-border {
+  border: 2px solid transparent;
+  background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box,
+              linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-green)) border-box;
+  animation: border-glow 4s ease-in-out infinite;
+}
+
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.5), 0 0 60px rgba(176, 38, 255, 0.3); }
+}
+
+/* Neural network animation container */
+.neural-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+/* Typing cursor */
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s infinite;
+  color: var(--neon-cyan);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
