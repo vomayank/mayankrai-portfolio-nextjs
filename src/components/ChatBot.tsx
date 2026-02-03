@@ -37,14 +37,17 @@ export default function ChatBot() {
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
     };
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isTyping]);
 
     const getBotResponse = (userMessage: string): string => {
         const lowered = userMessage.toLowerCase();
@@ -96,7 +99,7 @@ export default function ChatBot() {
                 </div>
 
                 {/* Messages */}
-                <div className="h-80 overflow-y-auto p-4 space-y-4">
+                <div ref={messagesContainerRef} className="h-80 overflow-y-auto p-4 space-y-4">
                     <AnimatePresence>
                         {messages.map((msg) => (
                             <motion.div
@@ -108,8 +111,8 @@ export default function ChatBot() {
                             >
                                 <div
                                     className={`max-w-[80%] px-4 py-3 rounded-2xl ${msg.isBot
-                                            ? "bg-white/5 text-gray-200 rounded-tl-sm"
-                                            : "bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-tr-sm"
+                                        ? "bg-white/5 text-gray-200 rounded-tl-sm"
+                                        : "bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-tr-sm"
                                         }`}
                                 >
                                     {msg.text}

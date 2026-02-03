@@ -9,7 +9,14 @@ interface Position {
 }
 
 const GRID_SIZE = 15;
-const INITIAL_SPEED = 150;
+
+const SPEEDS = {
+    slow: { label: "🐢 Slow", value: 300 },
+    normal: { label: "🐍 Normal", value: 200 },
+    fast: { label: "🚀 Fast", value: 120 },
+};
+
+type SpeedKey = keyof typeof SPEEDS;
 
 export default function SnakeGame() {
     const [snake, setSnake] = useState<Position[]>([{ x: 7, y: 7 }]);
@@ -19,6 +26,7 @@ export default function SnakeGame() {
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [speed, setSpeed] = useState<SpeedKey>("normal");
 
     const generateFood = useCallback(() => {
         let newFood: Position;
@@ -100,9 +108,9 @@ export default function SnakeGame() {
             });
         };
 
-        const gameLoop = setInterval(moveSnake, INITIAL_SPEED - Math.min(score, 100));
+        const gameLoop = setInterval(moveSnake, SPEEDS[speed].value);
         return () => clearInterval(gameLoop);
-    }, [direction, food, isPlaying, gameOver, score, highScore, generateFood]);
+    }, [direction, food, isPlaying, gameOver, score, highScore, generateFood, speed]);
 
     return (
         <div className="w-full max-w-md mx-auto">
@@ -113,6 +121,25 @@ export default function SnakeGame() {
                     <div className="flex gap-4 text-sm font-mono">
                         <span className="text-purple-400">Score: {score}</span>
                         <span className="text-gray-500">Best: {highScore}</span>
+                    </div>
+                </div>
+
+                {/* Speed Selection */}
+                <div className="px-4 py-3 border-b border-white/5">
+                    <div className="flex justify-center gap-2">
+                        {(Object.keys(SPEEDS) as SpeedKey[]).map((key) => (
+                            <button
+                                key={key}
+                                onClick={() => !isPlaying && setSpeed(key)}
+                                disabled={isPlaying}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${speed === key
+                                        ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                                        : "bg-white/5 text-gray-400 hover:bg-white/10"
+                                    } ${isPlaying ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                            >
+                                {SPEEDS[key].label}
+                            </button>
+                        ))}
                     </div>
                 </div>
 
